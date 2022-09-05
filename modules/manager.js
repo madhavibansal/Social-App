@@ -85,7 +85,7 @@ class Manager {
   deletePost = async (requestData) => {
     const findPost = await posts.findByIdAndRemove({ _id: requestData._id });
     if (!findPost) return "not found user";
-    return findPost;
+    return "deleted successfully";
   };
 
   searchPost = async ({ searchQuery }) => {
@@ -130,7 +130,7 @@ class Manager {
     const postComment = await posts
       .findOneAndUpdate(
         { _id: requestData.postId },
-        { $push: { requestData } },
+        { $push: { ...requestData } },
         { upsert: true, new: true, setDefaultsOnInsert: true }
       )
       .populate({ path: "comments.commentedBy", select: ["name"] });
