@@ -104,7 +104,7 @@ class Manager {
     return await posts.find({});
   };
 
-  likePost = async (requestData) => {
+  likesCount = async (requestData) => {
     const postDetails = await posts.findOne({ _id: requestData.postId });
     if (!postDetails) return "not found post";
     let newLikes = postDetails.likes;
@@ -119,7 +119,7 @@ class Manager {
     }
     let updatePost = await posts.findOneAndUpdate(
       { _id: requestData.postId },
-      { likes: newLikes },
+      { likes: newLikes,likeCount:newLikes.length },
       { upsert: true, new: true, setDefaultsOnInsert: true }
     );
     if (!updatePost) return "invalid request";

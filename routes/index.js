@@ -11,7 +11,7 @@ const route = (app) => {
   app.delete("/deletepost/:_id",  new Module().deletePost);
   app.get("/search-post", new Module().searchPost);
   app.get("/getAllpost",new Module().getAllPost);
-  app.put("/getlike-post", new Module().likePost);
+  app.put("/likeCount", new Module().likesCount);
   app.put("/commentpost", new Module().commentPost);
   app.put("/sharepost", new Module().sharePost);
 };

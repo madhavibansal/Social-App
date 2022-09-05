@@ -41,10 +41,9 @@ class Index {
     const getAllPosts = await new Manager().getAllPost(req.query);
     res.send(getAllPosts);
   }
-
-  async likePost(req, res) {
-    const getlikePosts = await new Manager().likePost(req.body);
-    res.send(getlikePosts);
+  async likesCount(req, res) {
+    const getlikesCount = await new Manager().likesCount(req.body);
+    res.send(getlikesCount);
   }
 
   async commentPost(req, res) {
