@@ -1,13 +1,10 @@
 const user = require("../models/user");
 const posts = require("../models/posts");
-const { signUpValidation, signInValidation } = require("../validation/index");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
 class Manager {
   signUp = async (requestData) => {
-    const { error } = signUpValidation(requestData);
-    if (error) return error.details[0].message;
 
     const emailExist = await user.findOne({ email: requestData.email });
     if (emailExist) return "Email is already exist";
@@ -23,10 +20,8 @@ class Manager {
   };
 
   signIn = async (requestData) => {
-    const { error } = signInValidation(requestData);
-    if (error) return error.details[0].message;
-
-    const users = await user.findOne({ email: requestData.email });
+    
+    let users = await user.findOne({ email: requestData.email });
     if (!users) return "Email is not valid";
 
     const pass = await bcrypt.compare(requestData.password, users.password);
@@ -41,7 +36,8 @@ class Manager {
       expiresIn: "1h",
     });
 
-    return token;
+  return await user.findOneAndUpdate({_id:users._id},{token:token},{ upsert: false, new: true, setDefaultsOnInsert: true})
+
   }
 
   getProfile = async (requestData) => {
