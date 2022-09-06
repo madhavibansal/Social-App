@@ -130,12 +130,12 @@ class Manager {
     const postComment = await posts
       .findOneAndUpdate(
         { _id: requestData.postId },
-        { $push: { ...requestData } },
+        { $push: { ...requestData  } },
         { upsert: true, new: true, setDefaultsOnInsert: true }
       )
       .populate({ path: "comments.commentedBy", select: ["name"] });
     if (!postComment) return "invalid request";
-    return postComment;
+    return postComment.comments;
   };
 
   sharePost = async (requestData) => {
