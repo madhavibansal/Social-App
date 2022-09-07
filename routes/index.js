@@ -1,10 +1,11 @@
 const Module = require("../modules/index");
 const { auth } = require("../jwtVerify/index");
 const validationManager = require("../middleware/validation")
-const userValidation = require("../validation/index");
+
+
 const route = (app) => {
-  app.post("/signUp", userValidation.signUpValidation,new Module().signUp);
-  app.post("/signIn", userValidation.signInValidation,new Module().signIn);
+  app.post("/signUp",validationManager.signUpValidation,new Module().signUp);
+  app.post("/signIn", validationManager.signInValidation,new Module().signIn);
   app.get("/getProfile/:id", auth,validationManager.getProfileValidation,new Module().getProfile);
   app.put("/updateProfile",auth, validationManager.updateProfileValidation, new Module().updateProfile);
   app.post("/createPost",auth, validationManager.createPostValidation,new Module().createPost);

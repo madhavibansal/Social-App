@@ -3,6 +3,22 @@ const yup = require("yup")
 
 module.exports = {
 
+  signUpValidation: async (req, res, next) => {
+    const schema = yup.object().shape({
+      name: yup.string().min(6).required(),
+      email: yup.string().required().email(),
+      password: yup.string().min(8).required(),
+    });
+    await validate(schema, req.body, res, next);
+},
+signInValidation: async (req, res, next) => {
+  const schema = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().min(8).required(),
+  });
+  await validate(schema, req.body, res, next);
+},
+
     getPostValidation: async (req, res, next) => {
         const schema = yup.object().shape({
           id:yup.string().required()
